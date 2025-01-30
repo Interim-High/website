@@ -1,4 +1,5 @@
 "use client";
+import Input from "@/components/home/inputField";
 //Question: Create a functional React component in TypeScript that accepts a name prop (string) and an age prop (number). 
 // The component should display a greeting message like "Hello, [name]! You are [age] years old."
 //Requirements: Use TypeScript for type-checking the props.
@@ -22,14 +23,14 @@ export default Question;
 // Requirements: Use TypeScript's useState hook.
 
 export function Present() {
-    const [count, setCount] = React.useState<number>(0)
+    const [count, setCount] = useState(0)
 
     const handleIncrease = () => setCount((prev) => prev + 1);
 
 
     const handleDecrease = () => {
-        let num = count - 1;
-        setCount(num);
+        setCount((prev) => 
+            prev -1 );
     }
     // console.log(count);
     return (
@@ -53,40 +54,35 @@ export function Present() {
 // Upon submission, display the entered values below the form.
 //Requirements: Add event handling for form submission and input changes.
 
-export function FormHandeling() {
-    const [formData, setformData] = useState({email: "", password: "" });
+export function FormHandling() {
+    const [formData, setFormData] = useState({email:'', password : ''});
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        const { name, value } = e.target;
-        console.log("Input value:", value);
-        
-        setformData((prev) => ({
-          ...prev,
-          [name]: value, 
-        }));
-      };
-
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+         const {name , value } = e.target;
+         setFormData((prevData) => ({
+            ...prevData,
+            [name] : value,
+         }));
+    };
     return (
         <div>
             <form >
                 <div>
-                    <label>Email:</label>
-                    <input className="w-full p-2 border rounded-lg"
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
+                <Input
+                    label="Email Address"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                />
                 </div>
                 <div>
-                    <label>Password:</label>
-                    <input  className="w-full p-2 border rounded-lg"
+                    <Input  
+                        label = "Enter Password"
+                        name = "password"
                         type="password"
-                        name="password"
                         value={formData.password}
-                        onChange={handleChange}     
-                        required
+                        onChange={handleChange}    
                     />
                 </div>
                 <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
